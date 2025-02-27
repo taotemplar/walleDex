@@ -5,6 +5,7 @@ import argparse
 
 import collections
 
+
 class TrieNode:
     def __init__(self):
         self.children = collections.defaultdict(TrieNode)
@@ -32,7 +33,8 @@ class Trie:
                 return prefix
         return None
 
-def search_for_vanity(prefixes, queue, args, max_attempts_per_process=None):
+
+def search_for_vanity(prefixes, queue, args):
     trie = Trie()
     for prefix in prefixes:
         trie.insert(prefix)
@@ -42,7 +44,7 @@ def search_for_vanity(prefixes, queue, args, max_attempts_per_process=None):
         starting_positions = [1,2]
 
     attempt = 0
-    while max_attempts_per_process is None or attempt < max_attempts_per_process:
+    while True:
         keypair = Keypair.create_from_mnemonic(Keypair.generate_mnemonic())
         address = keypair.ss58_address
         address_lower = address.lower()
@@ -51,65 +53,9 @@ def search_for_vanity(prefixes, queue, args, max_attempts_per_process=None):
             matched_prefix = trie.search(address_lower[offset:])
             if matched_prefix:
                 queue.put((keypair, attempt + 1, matched_prefix))
-                return
+                attempt = 0
 
         attempt += 1
-
-def generate_vanity_wallet_parallel(prefixes, args, max_attempts_per_process=100000):
-    """
-    Generate a Bittensor vanity wallet using multiple processes.
-    """
-    num_processes = multiprocessing.cpu_count()  # Use all available CPU cores
-
-    start_time = time.time()
-    total_attempts = 0
-
-    # Create a queue to collect results from processes
-    result_queue = multiprocessing.Queue()
-
-    # Create a pool of processes
-    processes = []
-    for _ in range(num_processes):
-        p = multiprocessing.Process(
-            target=search_for_vanity,
-            args=(prefixes, result_queue, args, max_attempts_per_process)
-        )
-        p.start()
-        processes.append(p)
-
-    while True:
-        # Wait for one process to find a match or all to complete
-        while result_queue.empty() and any(p.is_alive() for p in processes):
-            time.sleep(0.01)  # Avoid busy-waiting
-
-        # If a result is found, terminate all processes
-        if not result_queue.empty():
-            keypair, attempts, match_word = result_queue.get()
-            total_attempts += attempts
-            for p in processes:
-                p.terminate()
-
-            elapsed_time = time.time() - start_time
-            with open('results.txt','a') as f:
-                f.write(f"\n{match_word} Found a match after ~{attempts} addresses in {elapsed_time:.2f} seconds! [{attempts/elapsed_time:.1f} addresses/second]\n")
-                f.write(f"{match_word} -> {keypair.ss58_address}\n")
-                f.write(f"Mnemonic: {keypair.mnemonic}\n")
-                f.write(f"Public Key: {keypair.public_key.hex()}\n")
-                f.write(f"Private Key: {keypair.private_key.hex()}\n")
-            print(f'{match_word}: {keypair.ss58_address}')
-            return keypair
-
-        # If no result, all processes hit max_attempts; restart
-        total_attempts += num_processes * max_attempts_per_process
-        print(f"Completed {total_attempts} attempts... restarting search...")
-        for p in processes:
-            p.join()
-            p = multiprocessing.Process(
-                target=search_for_vanity,
-                args=(prefixes, result_queue, args, max_attempts_per_process)
-            )
-            p.start()
-            processes = [p]
 
 def pickWords(args):
     # Get the word list
@@ -122,8 +68,15 @@ def pickWords(args):
     alternate_letters = [('s','5'), ('i','1'), ('e','3'), ('o','0')]
     for w in word_list:
         word = w.lower()
+
         if len(word) < args.min_num_letters: continue
         elif len(word) > 10: continue
+
+        for letter in word:
+            if letter not in 'abcdefghijklmnopqrstuvwxyz0123456789':
+                print(f'Cannot use {w}, because it has a non-alpha-numeric character: {letter}')
+                continue
+
         chosen_words.append(word)
         if len(word) > 4: #Only use alternate letters to make longer words
             for index, letter in enumerate(word):
@@ -148,9 +101,55 @@ def parseArgs():
     # Validate the number of letters
     return args
 
+def generate_vanity_wallet_parallel(prefixes, processes, result_queue, args):
+    """
+    Generate a Bittensor vanity wallet using multiple processes.
+    """
+    start_time = time.time()
+
+    total_attempts = 0
+    while True:
+        # Wait for one process to find a match or all to complete
+        for p in processes:
+            if not p.is_alive():
+                raise Exception("Process died, this shouldn't happen...")
+        while result_queue.empty() and any(p.is_alive() for p in processes):
+            time.sleep(0.1)  # Avoid busy-waiting
+
+        # If a result is found, terminate all processes
+        if not result_queue.empty():
+            keypair, attempts, match_word = result_queue.get()
+            total_attempts += attempts
+#            for p in processes:
+#                p.terminate()
+
+            elapsed_time = time.time() - start_time
+            with open('results.txt','a') as f:
+                f.write(f"\n{match_word} Found a match after ~{attempts} addresses in {elapsed_time:.2f} seconds! [{attempts/elapsed_time:.1f} addresses/second]\n")
+                f.write(f"{match_word} -> {keypair.ss58_address}\n")
+                f.write(f"Mnemonic: {keypair.mnemonic}\n")
+                f.write(f"Public Key: {keypair.public_key.hex()}\n")
+                f.write(f"Private Key: {keypair.private_key.hex()}\n")
+            print(f'{match_word}: {keypair.ss58_address}')
+            return keypair
+
 if __name__ == "__main__":
     args = parseArgs()
     chosen_words = pickWords(args)
     print(f"Starting to search for '{len(chosen_words)}' prefixes...")
+    num_processes = multiprocessing.cpu_count()  # Use all available CPU cores
+    result_queue = multiprocessing.Queue() # Create a queue to collect results from processes
+
+    # Create a pool of processes
+    processes = []
+    for _ in range(num_processes):
+        p = multiprocessing.Process(
+            target=search_for_vanity,
+            args=(chosen_words, result_queue, args)
+        )
+        p.start()
+        processes.append(p)
+
+
     while True:
-        vanity_keypair = generate_vanity_wallet_parallel(chosen_words, args)
+        vanity_keypair = generate_vanity_wallet_parallel(chosen_words, processes, result_queue, args)
