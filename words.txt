@@ -5615,7 +5615,6 @@ hill
 hips
 hire
 hits
-hmcs
 hnru
 hogs
 hold
@@ -5749,7 +5748,6 @@ lane
 lang
 laos
 laps
-lara
 last
 late
 lawn
@@ -5987,7 +5985,6 @@ pair
 pale
 palm
 pape
-para
 pare
 park
 part
@@ -6861,22 +6858,19 @@ chris
 chuck
 chunk
 cider
-cindy
 circa
 cited
 cites
-citys
 civic
 civil
 claim
 clair
 clams
-clara
-clark
 class
 clean
 clear
 clerk
+lick
 click
 climb
 cling
@@ -9657,7 +9651,6 @@ hookup
 hoping
 horror
 horses
-hoskin
 hosted
 hostel
 hotels
@@ -16523,6 +16516,8 @@ teamwith
 teamwork
 teenager
 teething
+bittensor
+templar
 template
 temporal
 tendency

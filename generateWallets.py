@@ -2,9 +2,12 @@ from substrateinterface import Keypair
 import multiprocessing
 import time
 import argparse
+from rich.console import Console
 
 import collections
 
+
+class NotAliveException(Exception): pass
 
 class TrieNode:
     def __init__(self):
@@ -45,18 +48,21 @@ def search_for_vanity(prefixes, queue, args):
 
     attempt = 0
     while True:
-        keypair = Keypair.create_from_mnemonic(Keypair.generate_mnemonic())
-        address = keypair.ss58_address
-        address_lower = address.lower()
+        try:
+            keypair = Keypair.create_from_mnemonic(Keypair.generate_mnemonic())
+            address = keypair.ss58_address
+            address_lower = address.lower()
 
-        for offset in starting_positions:
-            matched_prefix = trie.search(address_lower[offset:])
-            if matched_prefix:
-                if not args.pretty or isPretty(address, matched_prefix, offset):
-                    queue.put((keypair, attempt + 1, matched_prefix))
-                    attempt = 0
+            for offset in starting_positions:
+                matched_prefix = trie.search(address_lower[offset:])
+                if matched_prefix:
+                    if not args.pretty or isPretty(address, matched_prefix, offset):
+                        queue.put((keypair, attempt + 1, matched_prefix))
+                        attempt = 0
 
-        attempt += 1
+            attempt += 1
+        except KeyboardInterrupt:
+            return
 
 def pickWords(args):
     # Get the word list
@@ -98,7 +104,7 @@ def generate_vanity_wallet_parallel(prefixes, processes, result_queue, args):
 
         for p in processes:
             if not p.is_alive():
-                raise Exception("Process died, this shouldn't happen...")
+                raise NotAliveException()
         while result_queue.empty() and any(p.is_alive() for p in processes):
             time.sleep(0.1)  # Avoid busy-waiting
 
@@ -111,8 +117,17 @@ def generate_vanity_wallet_parallel(prefixes, processes, result_queue, args):
                 f.write(f"Mnemonic: {keypair.mnemonic}\n")
                 f.write(f"Public Key: {keypair.public_key.hex()}\n")
                 f.write(f"Private Key: {keypair.private_key.hex()}\n")
-            print(f'{match_word}: {keypair.ss58_address}')
+            printAddress(console, match_word, keypair.ss58_address)
             return keypair
+
+console = Console()
+def printAddress(console, rawAddressWord, address):
+    wordStartIndex = address.lower().find(rawAddressWord.lower())
+    before = address[:wordStartIndex]
+    highlightedWord = address[wordStartIndex:wordStartIndex+len(rawAddressWord)]
+    after = address[wordStartIndex+len(rawAddressWord):]
+    console.print(f'{before}[red]{highlightedWord}[/red]{after}')
+
 
 def isPretty(address, word, offset):
     addressStartIndex = 0
@@ -151,7 +166,7 @@ def parseArgs():
     return parser.parse_args()
 
 
-if __name__ == "__main__":
+def main():
     args = parseArgs()
     chosen_words = pickWords(args)
     print(f"Starting to search for '{len(chosen_words)}' prefixes...")
@@ -170,4 +185,11 @@ if __name__ == "__main__":
 
 
     while True:
-        vanity_keypair = generate_vanity_wallet_parallel(chosen_words, processes, result_queue, args)
+        try:
+            vanity_keypair = generate_vanity_wallet_parallel(chosen_words, processes, result_queue, args)
+        except (KeyboardInterrupt, NotAliveException):
+            print('Ending')
+            return
+
+if __name__ == "__main__":
+    main()

@@ -217,6 +217,9 @@ def printDex(vanityDex, caughtWords, args):
                   }
 
 
+    wordSet = set([word for word in vanityDex])
+    wordsTuple = tuple(wordSet)
+
     #Start counting at 0
     for i in range(maxWordLength):
         for totals in totalsDict:
@@ -237,42 +240,36 @@ def printDex(vanityDex, caughtWords, args):
                         totalsDict['prettyPokemonCaught'][len(word_key)] += 1
                     break
 
+
     if args.show_pokemon:
         for word_key in vanityDex:
             if word_key.lower() in POKEMON:
                 if len(vanityDex[word_key]) > 0:
-                    stringBlock = None
                     for rawAddressWord, address in vanityDex[word_key]:
-                        if not args.show_pretty or isPretty(rawAddressWord):
-                            if not stringBlock:
-                                stringBlock = word_key
-                            stringBlock += f'\n>> {address}'
-                    if stringBlock:
-                        print(stringBlock)
+                        if (not args.show_pretty or isPretty(rawAddressWord)) \
+                         and (not args.legendary or isLegendary(rawAddressWord, address, wordsTuple)):
+                            printAddress(console, rawAddressWord, address)
 
-    wordSet = set([word for word in vanityDex])
-    wordsTuple = tuple(wordSet)
-    if args.find or args.min_characters:
+
+    if not args.show_pokemon and (args.find or args.min_characters or args.legendary):
         for word_key in vanityDex:
             if len(vanityDex[word_key]) == 0: continue
             if not args.find or word_key.startswith(args.find.lower()):
-                if len(word_key) >= args.min_characters:
-                    stringBlock = None
+                if len(word_key) >= (args.min_characters or 3):
                     for rawAddressWord, address in vanityDex[word_key]:
                         if (not args.show_pretty or isPretty(rawAddressWord)) \
-                         and (not args.legendary or any(address.endswith(word) for word in wordsTuple)):
-                            if not stringBlock:
-                                stringBlock = word_key
-                            stringBlock += f'\n>> {address}'
-                    if stringBlock:
-                        print(stringBlock)
+                         and (not args.legendary or isLegendary(rawAddressWord, address, wordsTuple)):
+                            printAddress(console, rawAddressWord, address)
+
+
+    print('')
 
 
     table = Table(title="Vanity Dex", header_style="bold white on dark_blue", box=box.SIMPLE_HEAVY)
     table.add_column("Letter Count", justify="right", style="bright_cyan")
     table.add_column("Caught", justify="right", style="white")
-    table.add_column("Pretties Caught", justify="right", style="bright_white")
-    table.add_column("Pokemon Caught", justify="right", style="cyan2")
+    table.add_column("Pretties Caught", justify="right", style="yellow")
+    table.add_column("Pokemon Caught", justify="right", style="white")
     table.add_column("Pretty Pokemon Caught", justify="right", style="cyan1")
 
     for length in range(15):
@@ -298,6 +295,14 @@ def printDex(vanityDex, caughtWords, args):
 
     console.print(table)
 
+def printAddress(console, rawAddressWord, address):
+    wordStartIndex = address.find(rawAddressWord)
+    before = address[:wordStartIndex]
+    highlightedWord = address[wordStartIndex:wordStartIndex+len(rawAddressWord)]
+    after = address[wordStartIndex+len(rawAddressWord):]
+    console.print(f'{before}[red]{highlightedWord}[/red]{after}')
+
+
 def parseArgs():
     parser = argparse.ArgumentParser(description='Displays your vanity wallet dex')
 
@@ -315,6 +320,10 @@ def parseArgs():
 
     return parser.parse_args()
 
+def isLegendary(rawAddressWord, address, wordsTuple):
+    wordStartIndex = address.find(rawAddressWord)
+    addressAfterFirstWord = address[wordStartIndex+len(rawAddressWord):]
+    return any(address.endswith(word) for word in wordsTuple) or any(addressAfterFirstWord.startswith(word) for word in wordsTuple)
 
 def isPretty(word):
     return isTitleCase(word) or word.islower() or word.isupper()
@@ -324,6 +333,8 @@ def isTitleCase(word):
 
 if __name__ == "__main__":
     args = parseArgs()
+    if args.legendary:
+        print('Finding legendaries can be slow if you have many wallets...')
     caughtWords = peerAtCaughtWords()
     vanityDex = populateDex(caughtWords)
     printDex(vanityDex, caughtWords, args)
