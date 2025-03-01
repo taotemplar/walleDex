@@ -9,6 +9,9 @@ Wallets are printed to console and their key/mnemonics are stored in results.txt
 
 ![image](https://github.com/user-attachments/assets/c5a22bcb-2498-4641-8e0e-c9b37970490f)
 
+Tip: `python3 generateWallets.py --help` for parameters to change what wallets are saved.
+
+
 # Step 2. View the generated mnemonics
 
 Open `results.txt` with your favorite/safest editor to view the mnemonics that create the wallets you've generated.  Ideally one that does not keep history (like notepad or something)
@@ -20,6 +23,8 @@ Open `results.txt` with your favorite/safest editor to view the mnemonics that c
 ![image](https://github.com/user-attachments/assets/367772eb-c810-418e-b9a7-318efcced054)
 
 Set a goal, try to catch all the words of a particular length, and attempt to get pretties.
+
+Tip: `python3 vanityDex.py --help` to view wallets and filtering options
 
 # Step 4. The game
 
@@ -41,11 +46,11 @@ Here are some ideas:
   * `python3 vanityDex.py -poke` for spotting your pokemon.
 
 # Step 5. Results.txt size
-* But be wary of your `results.txt` size.  It can grow fast if you don't use parameters with `python3 generateWallets.py`
+* But be wary of your `results.txt` size.  It can grow fast if you don't use parameters with `python3 generateWallets.py` !
 
 # Step 6. Actually using the wallet
 * Never copy a mnemonic from `results.txt` to your clipboard, never save it outside of the file.
-* Copy the mnemonic of the wallet you want to use to a piece of paper outside of your computer.  Then copy it again (2 pieces of paper).  See 44:44 here in this video for a run-down of how to safely store a mnemonic https://www.youtube.com/watch?v=UH_sOZSIk10&t=796s .
+* Physically write the mnemonic of the wallet you want to use to a piece of paper outside of your computer.  Then write it down again (2 pieces of paper).  See 44:44 here in this video for a run-down of how to safely store a mnemonic https://www.youtube.com/watch?v=UH_sOZSIk10&t=796s .
 * DELETE the wallet's mnemonic from the `results.txt` file.  Save and close the file.
 * Then manually type in the mnemonic to your favorite wallet app by looking at your paper mnemonic.
 
