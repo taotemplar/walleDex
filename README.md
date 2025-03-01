@@ -1,7 +1,7 @@
 # bittensorVanityWalletGenerator
 Generate vast amounts of vanity wallets quickly to pick from
 
-Step 1. Run with python3 generateWallets.py
+Step 1. Run with `python3 generateWallets.py`
 
 Wallets are printed to console and their key/mnemonics are stored in results.txt
 
