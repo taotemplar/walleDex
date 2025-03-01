@@ -1,6 +1,21 @@
 # bittensorVanityWalletGenerator
 Generate vast amounts of vanity wallets quickly to pick from
 
+# Step 0. Installation
+Clone this repo
+`git clone stuff`
+
+Install virtualenv
+`pip3 install virtualenv`
+`virtualenv ~/.venvs/vanityDex`
+
+Activate virtual env
+`source ~/.venvs/vanityDex/bin/activate`
+`cd the cloned repo`
+`pip -r requirements.txt`
+
+
+
 # Step 1. Run the generator
 
 `python3 generateWallets.py`
