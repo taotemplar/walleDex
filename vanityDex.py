@@ -306,10 +306,10 @@ def printAddress(console, rawAddressWord, address):
 def parseArgs():
     parser = argparse.ArgumentParser(description='Displays your vanity wallet dex')
 
-    parser.add_argument('-poke', '--show-pokemon', action='store_true', help='Show pokemon wallets you own')
-    parser.add_argument('-p', '--show-pretty', action='store_true', help='Show pretty wallets')
-    parser.add_argument('-n', '--min-characters', type=int, help='Show pretty wallets')
-    parser.add_argument('-l', '--legendary', action='store_true', help='Show wallets that start with words and end with words.')
+    parser.add_argument('-poke', '--show-pokemon', action='store_true', help='Filter to only pokemon wallets you own')
+    parser.add_argument('-p', '--show-pretty', action='store_true', help='Filter to only pretty wallets')
+    parser.add_argument('-n', '--min-characters', type=int, help='Filter by minimum number of characters')
+    parser.add_argument('-l', '--legendary', action='store_true', help='Filter to only wallets that start with words and end with words.')
     parser.add_argument(
         '-f',
         '--find',
