@@ -11,12 +11,12 @@ Wallets are printed to console and their key/mnemonics are stored in results.txt
 
 # Step 2. View the generated mnemonics
 
-Open `results.txt` with your favorite/safest editor.  Ideally one that does not keep history (like notepad or something)
-
-`less results.txt`
+Open `results.txt` with your favorite/safest editor to view the mnemonics that create the wallets you've generated.  Ideally one that does not keep history (like notepad or something)
 
 # Step 3. View your vanityDex
 
 `python3 vanityDex.py`
 
 ![image](https://github.com/user-attachments/assets/367772eb-c810-418e-b9a7-318efcced054)
+
+Gotta catch em all.
