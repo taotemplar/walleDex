@@ -75,4 +75,4 @@ Here are some ideas:
 * DELETE the wallet's mnemonic from the `results.txt` file.  Save and close the file.
 * Then manually type in the mnemonic to your favorite wallet app by looking at your paper mnemonic.
 
-Happy vanity wallet hunting!
+Gotta hash em all!
