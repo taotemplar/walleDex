@@ -36,9 +36,17 @@ Here are some ideas:
 * What about legendary wallets?
   * Legendary wallets are those that have more than 1 word, the word may be after the first word in the address OR at the end of the wallet address.
   * Eg: 5FIRExlkc...3udSALT
-  * `python3 vanityDex.py -l` spotting your legendaries.
+  * `python3 vanityDex.py -l` for spotting your legendaries.
 * Are you a pokemaniac?
   * `python3 vanityDex.py -poke` for spotting your pokemon.
- 
-  
-Gotta catch em all.
+
+# Step 5. Results.txt size
+* But be wary of your `results.txt` size.
+
+# Step 6. Actually using the wallet
+* Never copy a mnemonic from `results.txt` to your clipboard, never save it outside of the file.
+* Copy the mnemonic of the wallet you want to use to a piece of paper outside of your computer.  Then copy it again (2 pieces of paper).  See 44:44 here in this video for a run-down of how to safely store a mnemonic https://www.youtube.com/watch?v=UH_sOZSIk10&t=796s .
+* DELETE the wallet's mnemonic from the `results.txt` file.  Save and close the file.
+* Then manually type in the mnemonic to your favorite wallet app by looking at your paper mnemonic.
+
+Happy vanity wallet hunting!
