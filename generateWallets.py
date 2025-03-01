@@ -52,8 +52,9 @@ def search_for_vanity(prefixes, queue, args):
         for offset in starting_positions:
             matched_prefix = trie.search(address_lower[offset:])
             if matched_prefix:
-                queue.put((keypair, attempt + 1, matched_prefix))
-                attempt = 0
+                if not args.pretty or isPretty(address, matched_prefix, offset):
+                    queue.put((keypair, attempt + 1, matched_prefix))
+                    attempt = 0
 
         attempt += 1
 
@@ -70,7 +71,6 @@ def pickWords(args):
         word = w.lower()
 
         if len(word) < args.min_num_letters: continue
-        elif len(word) > 10: continue
 
         for letter in word:
             if letter not in 'abcdefghijklmnopqrstuvwxyz0123456789':
@@ -78,28 +78,15 @@ def pickWords(args):
                 continue
 
         chosen_words.append(word)
-        if len(word) > 4: #Only use alternate letters to make longer words
+        if not args.no_alternate_letters:
             for index, letter in enumerate(word):
 
                 for letter_key, letter_val in alternate_letters:
                     if letter == letter_key:
                         alternate_spelling_word = word[:index] + letter_val + word[index+1:]
                         chosen_words.append(alternate_spelling_word)
+
     return chosen_words
-
-def parseArgs():
-
-    parser = argparse.ArgumentParser(description='Creates vast numbers of vanity wallets quickly')
-
-    # Add an argument for the number of letters
-    parser.add_argument('-n', '--min-num-letters', type=int, default=4, help='Min word length from words.txt file')
-    parser.add_argument('-s', '--skip-5', action='store_true', help='Skip using the 5 as an "s" at the start of a word')
-
-    # Parse the arguments
-    return parser.parse_args()
-
-    # Validate the number of letters
-    return args
 
 def generate_vanity_wallet_parallel(prefixes, processes, result_queue, args):
     """
@@ -107,31 +94,62 @@ def generate_vanity_wallet_parallel(prefixes, processes, result_queue, args):
     """
     start_time = time.time()
 
-    total_attempts = 0
     while True:
-        # Wait for one process to find a match or all to complete
+
         for p in processes:
             if not p.is_alive():
                 raise Exception("Process died, this shouldn't happen...")
         while result_queue.empty() and any(p.is_alive() for p in processes):
             time.sleep(0.1)  # Avoid busy-waiting
 
-        # If a result is found, terminate all processes
         if not result_queue.empty():
             keypair, attempts, match_word = result_queue.get()
-            total_attempts += attempts
-#            for p in processes:
-#                p.terminate()
 
             elapsed_time = time.time() - start_time
             with open('results.txt','a') as f:
-                f.write(f"\n{match_word} Found a match after ~{attempts} addresses in {elapsed_time:.2f} seconds! [{attempts/elapsed_time:.1f} addresses/second]\n")
-                f.write(f"{match_word} -> {keypair.ss58_address}\n")
+                f.write(f"\n[{match_word}:{keypair.ss58_address}] Found a match after ~{attempts} address checks.\n")
                 f.write(f"Mnemonic: {keypair.mnemonic}\n")
                 f.write(f"Public Key: {keypair.public_key.hex()}\n")
                 f.write(f"Private Key: {keypair.private_key.hex()}\n")
             print(f'{match_word}: {keypair.ss58_address}')
             return keypair
+
+def isPretty(address, word, offset):
+    addressStartIndex = 0
+    addy_lower = address.lower()
+    word_lower = word.lower()
+    for index, addyLetter in enumerate(address):
+        if addy_lower[index:].startswith(word_lower):
+            addressStartIndex = index
+            break
+
+    addressStartIndex = offset
+    wordInAddress = address[addressStartIndex:len(word)+addressStartIndex]
+
+    #Ignore words with numbers
+    if any(char.isdigit() for char in wordInAddress):
+        return False
+    #Pick words that start with a capital
+    if wordInAddress[0].isupper() and wordInAddress[1:].islower():
+        return True
+    #Pick words that are uppercase or lowercase
+    if wordInAddress.isupper() or wordInAddress.islower():
+        return True
+    #Throw out the rest
+    return False
+
+
+def parseArgs():
+
+    parser = argparse.ArgumentParser(description='Creates vast numbers of vanity wallets quickly')
+
+    parser.add_argument('-n', '--min-num-letters', type=int, default=4, help='Min word length from words.txt file')
+    parser.add_argument('-s', '--skip-5', action='store_true', help='Skip using the 5 as an "s" at the start of a word')
+    parser.add_argument('--no-alternate-letters', action='store_true', help='Do not find words by replacing letters with numbers (for example, dont match: 3l1te, 5hark, d0rk)')
+    parser.add_argument('-p', '--pretty', action='store_true', help='Only find words that start with a capital, or all uppercase, or all lowercase.  DOES NOT MATCH ANY WORDS WITH NUMBERS!')
+
+    return parser.parse_args()
+
 
 if __name__ == "__main__":
     args = parseArgs()
