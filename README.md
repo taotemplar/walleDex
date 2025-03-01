@@ -1,5 +1,5 @@
 # bittensorVanityWalletGenerator
-Generate vast amounts of vanity wallets quickly to pick from
+A vanity wallet generator for Bittensor.  Collect rare words, build your BittoDex, and increase your vanity!
 
 # Step 0. Installation
 Clone this repo
