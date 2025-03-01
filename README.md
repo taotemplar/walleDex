@@ -41,7 +41,7 @@ Here are some ideas:
   * `python3 vanityDex.py -poke` for spotting your pokemon.
 
 # Step 5. Results.txt size
-* But be wary of your `results.txt` size.
+* But be wary of your `results.txt` size.  It can grow fast if you don't use parameters with `python3 generateWallets.py`
 
 # Step 6. Actually using the wallet
 * Never copy a mnemonic from `results.txt` to your clipboard, never save it outside of the file.
