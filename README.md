@@ -4,7 +4,7 @@ A vanity wallet generator for Bittensor.  Collect rare words, build your BittoDe
 # Step 0. Installation
 Clone this repo
 
-`git clone stuff`
+`git clone https://github.com/taotemplar/walleDex.git`
 
 Install virtualenv
 
@@ -16,7 +16,7 @@ Activate virtual env
 
 `source ~/.venvs/vanityDex/bin/activate`
 
-`cd the cloned repo`
+`cd walleDex`
 
 `pip -r requirements.txt`
 
