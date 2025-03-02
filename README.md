@@ -1,7 +1,11 @@
 # WalleDex
-A vanity wallet generator for Bittensor.  Collect rare words, build your WalleDex, and increase your vanity!
+### A vanity wallet generator for Bittensor.  Collect rare words, build your WalleDex, and increase your vanity!
 
-Gotta hash em all!
+![image](https://github.com/user-attachments/assets/f5d2b82c-50d4-4c3b-9cd5-e8a85c54bd78)
+
+
+
+### Gotta hash em all!
 
 Quick overview: 
 - `generateWallets.py` generates new wallets/mnemonics and saves the results into `rawAddresses.txt`
@@ -27,7 +31,7 @@ Activate and install virtual env requirements
 ```
 source ~/.venvs/walleDex/bin/activate
 cd walleDex
-pip -r requirements.txt
+pip install -r requirements.txt
 ```
 
 
@@ -38,7 +42,10 @@ pip -r requirements.txt
 python3 generateWallets.py
 ```
 
-Wallets are printed to console and their key/mnemonics are stored in `rawAddresses.txt`
+![image](https://github.com/user-attachments/assets/de890bbd-5056-4ab0-913a-57c69d8a91a9)
+
+
+Wallets are printed to console and their key/mnemonics are stored in `rawAddresses.txt`.  Can close with ctrl+c, and resume by re-running `python3 generateWallets.py` again.
 
 Tip: `python3 generateWallets.py --help` for parameters to change what wallets are saved.
 
@@ -52,6 +59,10 @@ Open `rawAddresses.txt` with your favorite/safest editor to view the mnemonics t
 ```
 python3 walleDex.py
 ```
+
+![image](https://github.com/user-attachments/assets/96cb2e75-3353-48d9-ba06-5dbd72634247)
+
+![image](https://github.com/user-attachments/assets/2553c4be-4fa8-437e-9a47-0bb6c78ee132)
 
 Set a goal, try to catch all the words of a particular length, and attempt to get pretties.
 
