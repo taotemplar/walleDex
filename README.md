@@ -1,10 +1,12 @@
 # WalleDex
 A vanity wallet generator for Bittensor.  Collect rare words, build your WalleDex, and increase your vanity!
 
+Gotta hash em all!
+
 Quick overview: 
-- `generateWallets.py` makes and saves new wallets/mnemonics and saves the results into `results.txt`
-  - It searches for any word in `words.txt`, checks if any of those words occur in the 1st, 2nd, and 3rd characters in the wallet address.
-- `walleDex.py` allows you to look at your generated wallets and their statistics
+- `generateWallets.py` generates new wallets/mnemonics and saves the results into `rawAddresses.txt`
+  - It searches for any word in `words.txt`, and checks if any of those words occur in the 1st, 2nd, and 3rd characters in the wallet address.
+- `walleDex.py` allows you to look at your generated addresses and their statistics
 
 # Step 0. Installation
 Clone this repo
@@ -17,13 +19,13 @@ Install virtualenv
 
 ```
 pip3 install virtualenv
-virtualenv ~/.venvs/vanityDex
+virtualenv ~/.venvs/walleDex
 ```
 
 Activate and install virtual env requirements
 
 ```
-source ~/.venvs/vanityDex/bin/activate
+source ~/.venvs/walleDex/bin/activate
 cd walleDex
 pip -r requirements.txt
 ```
@@ -36,28 +38,24 @@ pip -r requirements.txt
 python3 generateWallets.py
 ```
 
-Wallets are printed to console and their key/mnemonics are stored in results.txt
-
-![image](https://github.com/user-attachments/assets/c5a22bcb-2498-4641-8e0e-c9b37970490f)
+Wallets are printed to console and their key/mnemonics are stored in `rawAddresses.txt`
 
 Tip: `python3 generateWallets.py --help` for parameters to change what wallets are saved.
 
 
 # Step 2. View the generated mnemonics
 
-Open `results.txt` with your favorite/safest editor to view the mnemonics that create the wallets you've generated.  Ideally one that does not keep history (notepad would be safe)
+Open `rawAddresses.txt` with your favorite/safest editor to view the mnemonics that create the wallets you've generated.  Ideally one that does not keep history (notepad would be safe)
 
-# Step 3. View your vanityDex
+# Step 3. View your WalleDex
 
 ```
-python3 vanityDex.py
+python3 walleDex.py
 ```
-
-![image](https://github.com/user-attachments/assets/367772eb-c810-418e-b9a7-318efcced054)
 
 Set a goal, try to catch all the words of a particular length, and attempt to get pretties.
 
-Tip: `python3 vanityDex.py --help` to view wallets and filtering options
+Tip: `python3 walleDex.py --help` to view wallets and filtering options
 
 # Step 4. The game
 
@@ -77,17 +75,17 @@ Here are some ideas:
 * What about legendary wallets?
   * Legendary wallets are those that have more than 1 word, the word may be after the first word in the address OR at the end of the wallet address.
     * Eg: 5FIRExlkc...3udSALT
-  * `python3 vanityDex.py -l` for spotting your legendaries.
+  * `python3 walleDex.py -l` for spotting your legendaries.
 * Are you a pokemaniac?
-  * `python3 vanityDex.py -poke` for spotting your pokemon.
+  * `python3 walleDex.py -poke` for spotting your pokemon.
 
 # Step 5. Results.txt size
-* But be wary of your `results.txt` size.  It can grow fast if you don't use parameters with `python3 generateWallets.py` !
+* But be wary of your `rawAddresses.txt` size.  It can grow fast if you don't use parameters with `python3 generateWallets.py` !
 
 # Step 6. Actually using the wallet
-* Never copy a mnemonic from `results.txt` to your clipboard, never save it outside of the file.
+* Never copy a mnemonic from `rawAddresses.txt` to your clipboard, never save it outside of the file.
 * Physically write the mnemonic of the wallet you want to use to a piece of paper outside of your computer.  Then write it down again (2 pieces of paper).  See 44:44 here in this video for a run-down of how to safely store a mnemonic https://www.youtube.com/watch?v=UH_sOZSIk10&t=796s .
-* DELETE the wallet's mnemonic from the `results.txt` file.  Save and close the file.
+* DELETE the wallet's mnemonic from the `rawAddresses.txt` file.  Save and close the file.
 * Then manually type in the mnemonic to your favorite wallet app by looking at your paper mnemonic.
 
-Gotta hash em all!
+
