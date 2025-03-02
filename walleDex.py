@@ -192,7 +192,7 @@ def extractWord(text):
 
 
 def peerAtCaughtWords():
-    caughtWords = grepFile('results.txt', r'\[.*\]')
+    caughtWords = grepFile('rawAddresses.txt', r'\[.*\]')
     return [extractWord(line) for line in caughtWords]
 
 

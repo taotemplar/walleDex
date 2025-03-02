@@ -112,7 +112,7 @@ def generate_vanity_wallet_parallel(prefixes, processes, result_queue, args):
             keypair, attempts, match_word = result_queue.get()
 
             elapsed_time = time.time() - start_time
-            with open('results.txt','a') as f:
+            with open('rawAddresses.txt','a') as f:
                 f.write(f"\n[{match_word}:{keypair.ss58_address}] Found a match after ~{attempts} address checks.\n")
                 f.write(f"Mnemonic: {keypair.mnemonic}\n")
                 f.write(f"Public Key: {keypair.public_key.hex()}\n")
