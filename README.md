@@ -4,27 +4,32 @@ A vanity wallet generator for Bittensor.  Collect rare words, build your WalleDe
 # Step 0. Installation
 Clone this repo
 
-`git clone https://github.com/taotemplar/walleDex.git`
+```
+git clone https://github.com/taotemplar/walleDex.git
+```
 
 Install virtualenv
 
-`pip3 install virtualenv`
-
-`virtualenv ~/.venvs/vanityDex`
+```
+pip3 install virtualenv
+virtualenv ~/.venvs/vanityDex
+```
 
 Activate and install virtual env requirements
 
-`source ~/.venvs/vanityDex/bin/activate`
-
-`cd walleDex`
-
-`pip -r requirements.txt`
+```
+source ~/.venvs/vanityDex/bin/activate
+cd walleDex
+pip -r requirements.txt
+```
 
 
 
 # Step 1. Run the generator
 
-`python3 generateWallets.py`
+```
+python3 generateWallets.py
+```
 
 Wallets are printed to console and their key/mnemonics are stored in results.txt
 
@@ -39,7 +44,9 @@ Open `results.txt` with your favorite/safest editor to view the mnemonics that c
 
 # Step 3. View your vanityDex
 
-`python3 vanityDex.py`
+```
+python3 vanityDex.py
+```
 
 ![image](https://github.com/user-attachments/assets/367772eb-c810-418e-b9a7-318efcced054)
 
