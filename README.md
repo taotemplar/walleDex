@@ -79,7 +79,7 @@ Here are some ideas:
 * Are you a pokemaniac?
   * `python3 walleDex.py -poke` for spotting your pokemon.
 
-# Step 5. Results.txt size
+# Step 5. rawAddresses.txt size
 * But be wary of your `rawAddresses.txt` size.  It can grow fast if you don't use parameters with `python3 generateWallets.py` !
 
 # Step 6. Actually using the wallet
