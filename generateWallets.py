@@ -43,7 +43,7 @@ def search_for_vanity(prefixes, queue, args):
         trie.insert(prefix)
 
     starting_positions = [0,1,2]
-    if args.skip_5 is True:
+    if not args.use_5_as_S:
         starting_positions = [1,2]
 
     attempt = 0
@@ -159,7 +159,7 @@ def parseArgs():
     parser = argparse.ArgumentParser(description='Creates vast numbers of vanity wallets quickly')
 
     parser.add_argument('-n', '--min-num-letters', type=int, default=4, help='Min word length from words.txt file')
-    parser.add_argument('-s', '--skip-5', action='store_true', help='Skip using the 5 as an "s" at the start of a word')
+    parser.add_argument('-s', '--use-5-as-S', action='store_true', help='Use the 5 as an "s" at the start of a word')
     parser.add_argument('--no-alternate-letters', action='store_true', help='Do not find words by replacing letters with numbers (for example, dont match: 3l1te, 5hark, d0rk)')
     parser.add_argument('-p', '--pretty', action='store_true', help='Only find words that start with a capital, or all uppercase, or all lowercase.  DOES NOT MATCH ANY WORDS WITH NUMBERS!')
 
