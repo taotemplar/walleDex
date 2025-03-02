@@ -12,7 +12,7 @@ Install virtualenv
 
 `virtualenv ~/.venvs/vanityDex`
 
-Activate virtual env
+Activate and install virtual env requirements
 
 `source ~/.venvs/vanityDex/bin/activate`
 
