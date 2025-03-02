@@ -1,6 +1,11 @@
 # WalleDex
 A vanity wallet generator for Bittensor.  Collect rare words, build your WalleDex, and increase your vanity!
 
+Quick overview: 
+- `generateWallets.py` makes and saves new wallets/mnemonics and saves the results into `results.txt`
+  - It searches for any word in `words.txt`, checks if any of those words occur in the 1st, 2nd, and 3rd characters in the wallet address.
+- `walleDex.py` allows you to look at your generated wallets and their statistics
+
 # Step 0. Installation
 Clone this repo
 
@@ -40,7 +45,7 @@ Tip: `python3 generateWallets.py --help` for parameters to change what wallets a
 
 # Step 2. View the generated mnemonics
 
-Open `results.txt` with your favorite/safest editor to view the mnemonics that create the wallets you've generated.  Ideally one that does not keep history (like notepad or something)
+Open `results.txt` with your favorite/safest editor to view the mnemonics that create the wallets you've generated.  Ideally one that does not keep history (notepad would be safe)
 
 # Step 3. View your vanityDex
 
@@ -61,14 +66,17 @@ Just like in pokemon, not everyone's path or goals are the same.  You can carve 
 Here are some ideas:
 
 * Do you want to catch them all?  Try filling out the 3 letter words, then work on the 4 letter words, etc.
-  * `python3 generateWallets.py -n=4` `-n=` parameter is your friend here, increasing as needed
+  * `python3 generateWallets.py -n=4`
+    * `-n` parameter sets the minimum word length.  Increase as needed
 * Do you only want to catch long worded wallets?
-  * `python3 generateWallets.py -n=6` `-n=` parameter is helpful here again, probably with a minimum of 5.
+  * `python3 generateWallets.py -n=6`
+    * `-n` parameter is helpful here again, probably with a minimum of 5.
 * Do you only want to catch pretty worded wallets?
-  * `python3 generateWallets.py -p` `-p` parameter only looks for words that are --pretty.  Eg: ALLUPPERCASE or alllowercase or Startwithacapital.
+  * `python3 generateWallets.py -p`
+    * `-p` parameter only looks for words that are --pretty.  Eg: ALLUPPERCASE or alllowercase or Startwithacapital.
 * What about legendary wallets?
   * Legendary wallets are those that have more than 1 word, the word may be after the first word in the address OR at the end of the wallet address.
-  * Eg: 5FIRExlkc...3udSALT
+    * Eg: 5FIRExlkc...3udSALT
   * `python3 vanityDex.py -l` for spotting your legendaries.
 * Are you a pokemaniac?
   * `python3 vanityDex.py -poke` for spotting your pokemon.
