@@ -85,7 +85,7 @@ Here are some ideas:
     * `-p` parameter only looks for words that are --pretty.  Eg: ALLUPPERCASE or alllowercase or Startwithacapital.
 * What about legendary wallets?
   * Legendary wallets are those that have more than 1 word, the word may be after the first word in the address OR at the end of the wallet address.
-    * Eg: 5FIRExlkc...3udSALT
+    * Eg: 5**FIRE**xlkc...3ud**SALT**
   * `python3 walleDex.py -l` for spotting your legendaries.
 * Are you a pokemaniac?
   * `python3 walleDex.py -poke` for spotting your pokemon.
@@ -95,7 +95,7 @@ Here are some ideas:
 
 # Step 6. Actually using the wallet
 * Never copy a mnemonic from `rawAddresses.txt` to your clipboard, never save it outside of the file.
-* Physically write the mnemonic of the wallet you want to use to a piece of paper outside of your computer.  Then write it down again (2 pieces of paper).  See 44:44 here in this video for a run-down of how to safely store a mnemonic https://www.youtube.com/watch?v=UH_sOZSIk10&t=796s .
+* Physically write the mnemonic of the wallet you want to use to a piece of paper outside of your computer.  Then write it down again (2 pieces of paper).  See 44:44 here in this video for a run-down of how to safely store a mnemonic https://youtu.be/UH_sOZSIk10?t=2688 .
 * DELETE the wallet's mnemonic from the `rawAddresses.txt` file.  Save and close the file.
 * Then manually type in the mnemonic to your favorite wallet app by looking at your paper mnemonic.
 
