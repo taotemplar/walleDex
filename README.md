@@ -1,5 +1,5 @@
 # WalleDex
-### A vanity wallet generator for Bittensor.  Collect rare words, build your WalleDex, and increase your vanity!
+### A vanity wallet generator game for Bittensor.  Collect rare words, build your WalleDex, and increase your vanity!
 
 ![image](https://github.com/user-attachments/assets/f5d2b82c-50d4-4c3b-9cd5-e8a85c54bd78)
 
