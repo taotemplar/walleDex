@@ -70,11 +70,11 @@ Tip: `python3 walleDex.py --help` to view wallets and filtering options
 
 # Step 4. The game
 
-Just like in pokemon, not everyone's path or goals are the same.  You can carve your own goals.
+Not everyone's path or goals are the same.  You can carve your own goals.
 
 Here are some ideas:
 
-* Do you want to catch them all?  Try filling out the 3 letter words, then work on the 4 letter words, etc.
+* Do you want to hash em all?  Try filling out the 3 letter words, then work on the 4 letter words, etc.
   * `python3 generateWallets.py -n=4`
     * `-n` parameter sets the minimum word length.  Increase as needed
 * Do you only want to catch long worded wallets?
