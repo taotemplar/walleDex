@@ -322,6 +322,9 @@ def parseArgs():
 
 def isLegendary(rawAddressWord, address, wordsTuple):
     wordStartIndex = address.find(rawAddressWord)
+    if wordStartIndex > len(address) / 2:
+        #If word occurs in second half of the address, we never found a word at the front, so its not legendary
+        return False
     addressAfterFirstWord = address[wordStartIndex+len(rawAddressWord):]
     return any(address.endswith(word) for word in wordsTuple) or any(addressAfterFirstWord.startswith(word) for word in wordsTuple)
 

@@ -42,6 +42,10 @@ def search_for_vanity(prefixes, queue, args):
     for prefix in prefixes:
         trie.insert(prefix)
 
+    trieBackwards = Trie()
+    for prefix in prefixes:
+        trieBackwards.insert(prefix[::-1])
+
     starting_positions = [0,1,2]
     if not args.use_5_as_S:
         starting_positions = [1,2]
@@ -59,6 +63,13 @@ def search_for_vanity(prefixes, queue, args):
                     if not args.pretty or isPretty(address, matched_prefix, offset):
                         queue.put((keypair, attempt + 1, matched_prefix))
                         attempt = 0
+
+            inverted_address = address_lower[::-1]
+            matched_suffix = trieBackwards.search(inverted_address)
+            if matched_suffix:
+                if not args.pretty or isPretty(address, matched_suffix[::-1], len(address) - len(matched_suffix)):
+                    queue.put((keypair, attempt + 1, matched_suffix[::-1]))
+                    attempt = 0
 
             attempt += 1
         except KeyboardInterrupt:
