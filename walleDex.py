@@ -251,7 +251,7 @@ def printDex(vanityDex, caughtWords, args):
                             printAddress(console, rawAddressWord, address)
 
 
-    if not args.show_pokemon and (args.find or args.min_characters or args.legendary):
+    if not args.show_pokemon and (args.find or args.min_characters or args.legendary or args.show_pretty):
         for word_key in vanityDex:
             if len(vanityDex[word_key]) == 0: continue
             if not args.find or word_key.startswith(args.find.lower()):
@@ -295,11 +295,16 @@ def printDex(vanityDex, caughtWords, args):
 
     console.print(table)
 
+lastAddressWord = ''
 def printAddress(console, rawAddressWord, address):
+    global lastAddressWord
     wordStartIndex = address.find(rawAddressWord)
     before = address[:wordStartIndex]
     highlightedWord = address[wordStartIndex:wordStartIndex+len(rawAddressWord)]
     after = address[wordStartIndex+len(rawAddressWord):]
+    if lastAddressWord.lower() != rawAddressWord.lower():
+        print(f'---{rawAddressWord.lower()}---')
+    lastAddressWord = rawAddressWord
     console.print(f'{before}[red]{highlightedWord}[/red]{after}')
 
 
@@ -309,7 +314,7 @@ def parseArgs():
     parser.add_argument('-poke', '--show-pokemon', action='store_true', help='Filter to only pokemon wallets you own')
     parser.add_argument('-p', '--show-pretty', action='store_true', help='Filter to only pretty wallets')
     parser.add_argument('-n', '--min-characters', type=int, help='Filter by minimum number of characters')
-    parser.add_argument('-l', '--legendary', action='store_true', help='Filter to only wallets that start with words and end with words.')
+    parser.add_argument('-l', '--legendary', action='store_true', help='Filter to only wallets that have multiple words')
     parser.add_argument(
         '-f',
         '--find',
