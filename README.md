@@ -99,4 +99,6 @@ Here are some ideas:
 * DELETE the wallet's mnemonic from the `rawAddresses.txt` file.  Save and close the file.
 * Then manually type in the mnemonic to your favorite wallet app by looking at your paper mnemonic.
 
-
+# Step 7. Show it off
+* For maximum vanity, send a tiny donation to the "showme" wallet
+* This wallet's received transfers serves as the place to show off the best vanity wallets: https://taostats.io/account/5GshoWMe6a9AgoqBGBnkBG1sy2ygvdqHhaMtP2qEKiWhq8Xn/transfers
