@@ -23,7 +23,7 @@ requests==2.32.3
 rich==13.9.4
 scalecodec==1.2.11
 six==1.17.0
-substrate-interface==1.7.11
+substrate-interface
 toolz==1.0.0
 typing_extensions==4.12.2
 urllib3==2.3.0
