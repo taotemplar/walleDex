@@ -101,4 +101,5 @@ Here are some ideas:
 
 # Step 7. Show it off
 * For maximum vanity, send a tiny donation to the "showme" wallet
-* This wallet's received transfers serves as the place to show off the best vanity wallets: https://taostats.io/account/5GshoWMe6a9AgoqBGBnkBG1sy2ygvdqHhaMtP2qEKiWhq8Xn/transfers
+* This wallet's received transfers serves as the place to show off the best vanity wallets:
+  * https://taostats.io/account/5GshoWMe6a9AgoqBGBnkBG1sy2ygvdqHhaMtP2qEKiWhq8Xn/transfers
