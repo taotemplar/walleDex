@@ -89,6 +89,7 @@ Here are some ideas:
   * `python3 walleDex.py -l` for spotting your legendaries.
 * Are you a pokemaniac?
   * `python3 walleDex.py -poke` for spotting your pokemon.
+* You can search for words with `python3 walleDex.py -f=replace_this_with_word`
 
 # Step 5. rawAddresses.txt size
 * But be wary of your `rawAddresses.txt` size.  It can grow fast if you don't use parameters with `python3 generateWallets.py` !
