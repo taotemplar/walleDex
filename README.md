@@ -52,7 +52,9 @@ Tip: `python3 generateWallets.py --help` for parameters to change what wallets a
 
 # Step 2. View the generated mnemonics
 
-Open `rawAddresses.txt` with your favorite/safest editor to view the mnemonics that create the wallets you've generated.  Ideally open with an editor that does not keep history (notepad would be safe)
+Open `rawAddresses.txt` with your favorite/safest editor to view the mnemonics that create the wallets you've generated.  Ideally open with an editor that does not keep history (notepad would be safe).
+
+### 🔴❗NEVER SHARE YOUR rawAddresses.txt WITH ANYONE.❗🔴
 
 # Step 3. View your WalleDex
 
