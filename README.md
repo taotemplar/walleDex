@@ -96,6 +96,7 @@ Here are some ideas:
 
 # Step 5. rawAddresses.txt size
 * But be wary of your `rawAddresses.txt` size.  It can grow fast if you don't use parameters with `python3 generateWallets.py` !
+* If your rawAddresses.txt file gets too big (>100mb) walledex may stop being able to open/read your wallets and you may need to start over!
 
 # Step 6. Actually using the wallet
 * Never copy a mnemonic from `rawAddresses.txt` to your clipboard, never save it outside of the file.
