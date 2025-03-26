@@ -2,8 +2,9 @@
 ### A vanity wallet generator game for Bittensor.  Collect rare words, build your WalleDex, and increase your vanity!
 
 ![image](https://github.com/user-attachments/assets/f5d2b82c-50d4-4c3b-9cd5-e8a85c54bd78)
-
-
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=2eU5fUHNNUc">Setup tutorial on youtube</a>
+</div>
 
 ### Gotta hash em all!
 
