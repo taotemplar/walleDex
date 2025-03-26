@@ -10,7 +10,7 @@
 
 Quick overview: 
 - `generateWallets.py` generates new wallets/mnemonics and saves the results into `rawAddresses.txt`
-  - It searches for any word in `words.txt`, and checks if any of those words occur in the 1st, 2nd, and 3rd characters in the wallet address.
+  - It searches for any word in `words.txt`, and checks if any of those words occur in the 1st, 2nd, and 3rd characters in the wallet address.  Also checks the end of the address.
 - `walleDex.py` allows you to look at your generated addresses and their statistics
 
 # Step 0. Installation
